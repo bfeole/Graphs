@@ -81,7 +81,7 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        # If using `visisted=set()` // returns what appears to be ordered or returning key not sure how to fix
+        # If using `visited=set()` // returns what appears to be ordered or returning key not sure how to fix
         # visited.add(starting_vertex)
 
         # If using a stack `visited=Stack()`// doesn't work stack non iterable
@@ -89,7 +89,7 @@ class Graph:
 
         # If using a list `visited=[]`// output is concurrent with acceptable below
         visited += [starting_vertex]
-        # for every neighbor of starting vert
+        # for every neighbor of starting vert if no neighbors return visisted
         for neighbor in self.vertices[starting_vertex]:
             # if neighbor not visisted
             if neighbor not in visited:
@@ -108,7 +108,34 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        # Create an empty queue and enqueue A PATH TO the starting vertex ID
+        q = Queue()
+        q.enqueue([starting_vertex])
+        # Create a Set to store visited vertices
+        visited = set()
+        # While queue is not empty
+        while q.size() > 0:
+            # Dequeue the first PATH
+            path = q.dequeue()
+            # Grab the last vertex from the PATH
+            v = path[-1]
+            # v = q.dequeue(path[0])
+            # v_last = v[:-1]
+            # If that vertex has not been visited...
+            if v not in visited:
+                # CHECK IF IT'S THE TARGET
+                if v == destination_vertex:
+                    # IF SO, RETURN PATH
+                    return path
+                # Mark it as visited...
+                visited.add(v)
+                # Then add A PATH TO its neighbors to the back of the queue
+                for neighbor in self.vertices[v]:
+                    # COPY THE PATH
+                    copy = list(path)
+                # APPEND THE NEIGHBOR TO THE BACK
+                    copy.append(neighbor)
+                    q.enqueue(copy)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -116,7 +143,6 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
 
 
 if __name__ == '__main__':
