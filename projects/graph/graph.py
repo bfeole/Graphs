@@ -95,7 +95,7 @@ class Graph:
             if neighbor not in visited:
                 # pass current traversed list back into dft_recursive with neighbor as starter
                 visited = self.dft_recursive(neighbor, visited)
-                print(visited)
+                # print(visited)
         return visited
 
         # get neighbors
@@ -119,8 +119,6 @@ class Graph:
             path = q.dequeue()
             # Grab the last vertex from the PATH
             v = path[-1]
-            # v = q.dequeue(path[0])
-            # v_last = v[:-1]
             # If that vertex has not been visited...
             if v not in visited:
                 # CHECK IF IT'S THE TARGET
@@ -143,6 +141,33 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
+
+        # Create an empty STACK and PUSH A PATH TO the starting vertex ID
+        s = Stack()
+        s.push([starting_vertex])
+        # Create a Set to store visited vertices
+        visited = set()
+        # While the STACK is not empty...
+        while s.size() > 0:
+            # POP the first PATH
+            path = s.pop()
+            # Grab the last vertex from the PATH
+            v = path[-1]
+            # If that vertex has not been visited...
+            if v not in visited:
+                # CHECK IF IT'S THE TARGET
+                if v == destination_vertex:
+                    # IF SO, RETURN PATH
+                    return path
+                # Mark it as visited...
+                visited.add(v)
+                # Then add A PATH TO its neighbors to the FRONT? of the STACK
+                for neighbor in self.vertices[v]:
+                    # COPY THE PATH
+                    copy = list(path)
+                    # APPEND THE NEIGHOR TO THE FRONT?
+                    copy.append(neighbor)
+                    s.push(copy)
 
 
 if __name__ == '__main__':
