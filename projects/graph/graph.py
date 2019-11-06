@@ -29,6 +29,20 @@ class Graph:
         else:
             raise IndexError("That vertex does not exist")
 
+    def add_undirected_edge(self, v1, v2):
+        """
+        Add a undirected edge to the graph.
+        For vertex v1, v2 as a connection v1 <-> v2
+        """
+        # .add() is notation to add something to a set
+        # for vertex v1 add v2 as a connection v1 -> v2
+        # adding another edge from v2 -> v1 is undirected/goes both ways
+        if v1 in self.vertices and v2 in self.vertices:
+            self.vertices[v1].add(v2)
+            self.vertices[v2].add(v1)
+        else:
+            raise IndexError("That vertex does not exist")
+
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
@@ -95,7 +109,7 @@ class Graph:
             if neighbor not in visited:
                 # pass current traversed list back into dft_recursive with neighbor as starter
                 visited = self.dft_recursive(neighbor, visited)
-                # print(visited)
+                print(visited)
         return visited
 
         # get neighbors
@@ -134,6 +148,7 @@ class Graph:
                 # APPEND THE NEIGHBOR TO THE BACK
                     copy.append(neighbor)
                     q.enqueue(copy)
+            # if nothing is found return none
 
     def dfs(self, starting_vertex, destination_vertex):
         """
