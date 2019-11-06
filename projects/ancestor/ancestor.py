@@ -40,34 +40,48 @@ def earliest_ancestor(ancestors, starting_node):
     # While the stack is not empty...
     while s.size() > 0:
         # pop the first vertex
+        print(f"Starting node/stack: {s}")
         path = s.pop()
-        print(f"first pop path{path}")
+        print(f"pop last element from stack, point to path: {path}")
         # set var for last element in vertex
         vertex = path[-1]
-        print(f"vertex = path[-1]{path[-1]}")
+        print(f"point vertex to last vert in path: {path[-1]}")
 
+        print(
+            f"If length of path: {len(path)} > length of deep path: {len(deep_path)}")
         if len(path) > len(deep_path):
-            print(f"is len {len(path)} > len {len(deep_path)}")
-            print(f"deep_path{deep_path} = path{path}")
+            print(f"point deep path: {deep_path} to path: {path}")
             deep_path = path
         if len(path) == len(deep_path):
-            print(f"is {path[-1]} < {deep_path[-1]}")
+            print(
+                f"Check if last vert in path: {path[-1]} is < the last vert in deep path: {deep_path[-1]}")
             if path[-1] < deep_path[-1]:
-                print(f"{deep_path} = {path}")
+                print(
+                    f" if so, set {deep_path} = {path} to keep lowest indexed parent")
                 deep_path = path
-                # print(f"deep path 2{deep_path}")
+
+        if len(graph.vertices[vertex]) == 0:
+            print(f"There are no neighbors for vertex")
 
         for neighbor in graph.vertices[vertex]:
+            print(f"Begin loop for neighbor:{neighbor}")
+            print("START")
+            print(
+                f"get parents for vert {vertex}: {graph.vertices[vertex]}")
+            print(f"Copy this path: {path}")
             path_copy = path.copy()
+            print(f"append the neighbor: {neighbor}")
             path_copy.append(neighbor)
-            print(f"path copy {path_copy}")
+            print(f"Append, current path copy: {path_copy}")
             s.push(path_copy)
+            print(f"Push updated path to stack: {s}")
+            print("STOP")
 
     if len(path) == 1:
-        print(f"edge case{len(path)}")
+        print(f"edge case triggered: len(path) == {len(path)}")
         return -1
 
-    print(f"deep path return {deep_path[-1]}")
+    print(f"current deep path {deep_path} return last {deep_path[-1]}")
     print('BREAK __ ')
     return deep_path[-1]
 
@@ -83,4 +97,4 @@ an_test = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7),
 
 # earliest_ancestor(an_test, 1)
 # earliest_ancestor(an_test, 3)
-earliest_ancestor(an_test, 8)
+print(earliest_ancestor(an_test, 8))
