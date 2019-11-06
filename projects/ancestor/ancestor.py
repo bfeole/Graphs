@@ -71,25 +71,24 @@ def earliest_ancestor(ancestors, starting_node):
                 deep_path = path
                 print(f"deep path 2{deep_path}")
 
+        # for neighbor in graph.vertices[vertex]:
         for neighbor in graph.vertices[vertex]:
+            path_copy = path.copy()
+            path_copy.append(neighbor)
+            print(f"path copy {path_copy}")
+            s.push(path_copy)
+            # q.enqueue(neighbor)
+            # print(neighbor)
 
-            for neighbor in graph.vertices[vertex]:
-                path_copy = path.copy()
-                path_copy.append(neighbor)
-                print(f"path copy {path_copy}")
-                s.push(path_copy)
-                # q.enqueue(neighbor)
-                # print(neighbor)
+    # if len(path) == 1:
+    #     print(f"edge case{len(path)}")
+    #     return -1
 
-    if len(path) == 1:
-        print(f"edge case{len(path)}")
-        return -1
-
-    if len(path_copy[-1]) == len(path_copy[-2]):
-        print(path_copy[-2][-1])
-        return path_copy[-2][-1]
-    else:
-        return path_copy[-1][-1]
+    # if len(path_copy[-1]) == len(path_copy[-2]):
+    #     print(path_copy[-2][-1])
+    #     return path_copy[-2][-1]
+    # else:
+    #     return path_copy[-1][-1]
 
         # if not deep_path[-1]:
         #     return -1
