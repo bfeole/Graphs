@@ -1,5 +1,5 @@
 
-from util import Stack, Queue
+from util import Stack
 
 
 class Graph:
@@ -18,12 +18,6 @@ class Graph:
             raise IndexError("That vertex does not exist")
 
 
-# test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6),
-#                   (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-
-# print(earliest_ancestor(test_ancestors, 1))
-
-
 def earliest_ancestor(ancestors, starting_node):
 
     graph = Graph()
@@ -33,66 +27,48 @@ def earliest_ancestor(ancestors, starting_node):
     for node in ancestors:
         graph.add_vertex(node[0])
         graph.add_vertex(node[1])
+
+    # Create edges
+    for node in ancestors:
         graph.add_edge(node[1], node[0])
 
-    # Create Edges
-    # for node in ancestors:
-
     # Start DFS with starting node
-    # q = Queue()
     s = Stack()
-    # q.enqueue([starting_node])
     s.push([starting_node])
     deep_path = []
-
-    visited = set()
 
     # While the stack is not empty...
     while s.size() > 0:
         # pop the first vertex
         path = s.pop()
-        print(f"path{path}")
+        print(f"first pop path{path}")
         # set var for last element in vertex
         vertex = path[-1]
-
-        # if we have vertex in graph
-        # if not graph.vertices[vertex]:
-        # if vertex not in visited:
-        #     # print(deep_path)
-        #     deep_path.append([vertex])
-        #     visited.add([vertex])
+        print(f"vertex = path[-1]{path[-1]}")
 
         if len(path) > len(deep_path):
+            print(f"is len {len(path)} > len {len(deep_path)}")
+            print(f"deep_path{deep_path} = path{path}")
             deep_path = path
-            print(f"deep path 1{deep_path}")
-        if len(path) <= len(deep_path):
-            deep_path = path
-            if path[-1] == deep_path[-1]:
+        if len(path) == len(deep_path):
+            print(f"is {path[-1]} < {deep_path[-1]}")
+            if path[-1] < deep_path[-1]:
+                print(f"{deep_path} = {path}")
                 deep_path = path
-                print(f"deep path 2{deep_path}")
+                # print(f"deep path 2{deep_path}")
 
-        # for neighbor in graph.vertices[vertex]:
         for neighbor in graph.vertices[vertex]:
             path_copy = path.copy()
             path_copy.append(neighbor)
             print(f"path copy {path_copy}")
             s.push(path_copy)
-            # q.enqueue(neighbor)
-            # print(neighbor)
 
-    # if len(path) == 1:
-    #     print(f"edge case{len(path)}")
-    #     return -1
+    if len(path) == 1:
+        print(f"edge case{len(path)}")
+        return -1
 
-    # if len(path_copy[-1]) == len(path_copy[-2]):
-    #     print(path_copy[-2][-1])
-    #     return path_copy[-2][-1]
-    # else:
-    #     return path_copy[-1][-1]
-
-        # if not deep_path[-1]:
-        #     return -1
     print(f"deep path return {deep_path[-1]}")
+    print('BREAK __ ')
     return deep_path[-1]
 
     # Given the dataset and the ID of an individual node/vert
@@ -101,4 +77,10 @@ def earliest_ancestor(ancestors, starting_node):
     # If no parent nodes/verts, return -1
 
 
-# print(earliest_ancestor(test_ancestors, 1))
+an_test = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7),
+           (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
+
+
+# earliest_ancestor(an_test, 1)
+# earliest_ancestor(an_test, 3)
+earliest_ancestor(an_test, 8)
