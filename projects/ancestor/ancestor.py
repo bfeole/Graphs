@@ -33,18 +33,39 @@ def earliest_ancestor(ancestors, starting_node):
     # for node in ancestors:
 
     # Start DFS with starting node
-    q = Queue()
-    q.enqueue([starting_node])
+    # q = Queue()
+    s = Stack()
+    # q.enqueue([starting_node])
+    s.push([starting_node])
+    deep_path = []
 
-    visited = set()
+    # visited = set()
 
-    while q.size() > 0:
-        v = q.dequeue()
-        if v not in visited:
-            visited.add(v)
-            for neighbors in graph.vertices[v]:
-                q.enqueue(neighbors)
-                print(neighbors)
+    # While the stack is not empty...
+    while s.size() > 0:
+        # pop the first vertex
+        path = s.pop()
+        # set var for last element in vertex
+        vertex = path[-1]
+
+        # if we have vertex in graph
+        if graph.vertices[vertex]:
+            if len(path) > len(deep_path):
+                deep_path = path
+            if len(path) == len(deep_path):
+                if path[-1] < deep_path[-1]:
+                    deep_path = path
+
+        for neighbor in graph.vertices[vertex]:
+            path_copy = path.copy()
+            path_copy.append(neighbor)
+            s.push(path_copy)
+            # q.enqueue(neighbor)
+            # print(neighbor)
+
+        # if not deep_path[-1]:
+        #     return -1
+    return deep_path[-1]
 
     # Given the dataset and the ID of an individual node/vert
     # return the vert farthest away from the starting vert
